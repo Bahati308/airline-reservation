@@ -80,6 +80,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>air-reservation</finalName>
 	</build>
 
 </project>
