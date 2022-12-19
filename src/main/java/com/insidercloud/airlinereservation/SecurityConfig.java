@@ -17,13 +17,20 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests()
-                .requestMatchers("/","/images/**").permitAll()
-                .anyRequest().authenticated()
-                .and().oauth2Login()
-                .and().logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .addLogoutHandler(logoutHandler);
+        http.authorizeHttpRequests(authorize -> {
+                    try {
+                        authorize
+                                        .requestMatchers("/","/images/**").permitAll()
+                                        .anyRequest().authenticated()
+                                        .and().oauth2Login()
+                                        .and().logout()
+                                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                                        .addLogoutHandler(logoutHandler);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                );
         return http.build();
     }
 }
