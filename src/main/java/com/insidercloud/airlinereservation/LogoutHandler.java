@@ -2,6 +2,8 @@ package com.insidercloud.airlinereservation;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
@@ -14,12 +16,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.io.IOException;
 
 /**
- * Needed to perform SSO logout with Auth0. By default, Spring will clear the SecurityContext and the session.
- * This controller will also log users out of Auth0 by calling the Auth0 logout endpoint.
+ * Needed to perform SSO logout with Auth0. By default, Spring will clear the {@linkplain org.springframework.security.core.context.SecurityContext}
+ * and the session. This controller will also log users out of Auth0 by calling the
+ * <a href="https://auth0.com/docs/api/authentication?javascript&_ga=2.220855071.683371550.1592511441-1771410918.1592511441#logout">Auth0 logout endpoint</a>.
  */
 @Controller
 public class LogoutHandler extends SecurityContextLogoutHandler {
 
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
     private final ClientRegistrationRepository clientRegistrationRepository;
 
     /**
@@ -60,10 +64,11 @@ public class LogoutHandler extends SecurityContextLogoutHandler {
                 .buildAndExpand(clientId, returnTo)
                 .toUriString();
 
+        log.info("Will attempt to redirect to logout URL: {}", logoutUrl);
         try {
             httpServletResponse.sendRedirect(logoutUrl);
         } catch (IOException ioe) {
-            // Handle or log error redirecting to logout URL
+            log.error("Error redirecting to logout URL", ioe);
         }
     }
 
