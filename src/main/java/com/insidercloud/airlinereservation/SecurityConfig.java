@@ -1,11 +1,13 @@
 package com.insidercloud.airlinereservation;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+@Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
@@ -17,20 +19,19 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorize -> {
-                    try {
-                        authorize
-                                        .requestMatchers("/","/images/**").permitAll()
-                                        .anyRequest().authenticated()
-                                        .and().oauth2Login()
-                                        .and().logout()
-                                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                                        .addLogoutHandler(logoutHandler);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                );
+
+        http.authorizeHttpRequests( requests -> requests
+                .requestMatchers("/").permitAll()
+                .anyRequest().authenticated()
+                )
+                    .oauth2Login()
+                    .and()
+                    .logout(logout -> logout
+                            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                            .addLogoutHandler(logoutHandler)
+                            .logoutSuccessUrl("/")
+                    );
+
         return http.build();
     }
 }
