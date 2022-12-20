@@ -54,12 +54,12 @@ public class LogoutHandler extends SecurityContextLogoutHandler {
 
         // Build the URL to log the user out of Auth0 and redirect them to the home page.
         // URL will look like https://YOUR-DOMAIN/v2/logout?clientId=YOUR-CLIENT-ID&returnTo=http://localhost:3000
-        String issuer = (String) getClientRegistration().getProviderDetails().getConfigurationMetadata().get("issuer");
+        //String issuer = (String) getClientRegistration().getProviderDetails().getConfigurationMetadata().get("issuer");
         String clientId = getClientRegistration().getClientId();
         String returnTo = ServletUriComponentsBuilder.fromCurrentContextPath().build().toString();
 
         String logoutUrl = UriComponentsBuilder
-                .fromHttpUrl(issuer + "v2/logout?client_id={clientId}&returnTo={returnTo}")
+                .fromHttpUrl( "https://dev-z724twbw.us.auth0.com//v2/logout?client_id={clientId}")
                 .encode()
                 .buildAndExpand(clientId, returnTo)
                 .toUriString();
