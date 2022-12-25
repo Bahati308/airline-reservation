@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ProfileController {
 
-    @GetMapping("/profile")
+    @GetMapping("/dashboard")
     public String profile(Model model, @AuthenticationPrincipal OidcUser oidcUser) {
         model.addAttribute("profile", oidcUser.getClaims());
         return "profile";

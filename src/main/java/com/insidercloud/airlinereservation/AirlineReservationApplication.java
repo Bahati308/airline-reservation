@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 @SpringBootApplication
 public class AirlineReservationApplication implements CommandLineRunner {
@@ -23,6 +26,7 @@ public class AirlineReservationApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(AirlineReservationApplication.class, args);
 	}
+	private final Logger log = LoggerFactory.getLogger(AirlineReservationApplication.class.getName());
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -45,8 +49,10 @@ public class AirlineReservationApplication implements CommandLineRunner {
 			planeRepository.save(new Plane("Boeing 777X","777X","Boeing", 50, 300, 1800));
 		}
 		for (User user:userRepository.findAll()){
-			System.out.println(user.toString());
-
+			log.info(user.toString());
+		}
+		for(Plane plane:planeRepository.findAll()){
+			log.info(plane.toString());
 		}
 
 	}

@@ -1,95 +1,132 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Spring MVC Security Quickstart</title>
 </head>
-<div class="nav-container mb-3" th:fragment="navbar">
-  <nav class="navbar navbar-expand-md navbar-light bg-light">
-    <div class="container">
-      <div class="navbar-brand logo"></div>
-      <button
-              class="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
+<div class="" th:fragment="navbar">
+  <nav class="relative px-4 py-4 flex justify-between items-center bg-white/10 rounded-t-3xl" aria-label="navbar">
+    <a class="text-3xl font-bold leading-none" th:href="@{/}">
+      <img th:src="@{/images/logo50w.png}" alt="logo" class="h-10 inline-block" />
+      <span class="inline-block text-white text-lg ml-3 font-thin">
+        My<span class="font-bold text-yellow-500">PLODS</span>
+      </span>
+      <img src="https://www.oneworld.com/images/logo.webp" alt="one world logo" class="ml-2 h-12 inline-block transition-transform hover:h-15" />
+    </a>
+    <div class="lg:hidden">
+      <button class="navbar-burger flex items-center text-blue-600 p-3">
+        <svg class="block h-4 w-4 fill-white hover:fill-yellow-500" viewBox="0 0 20 20"
+             xmlns="http://www.w3.org/2000/svg">
+          <title>Mobile menu</title>
+          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+        </svg>
       </button>
-
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a href="/" class="nav-link">Home</a>
+    </div>
+    <ul
+            class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6">
+      <li>
+        <a class="text-sm text-yellow-600 font-bold hover:text-yellow-600" th:href="@{/}">Home</a>
+      </li>
+      <li class="text-gray-300">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill"
+             viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+        </svg>
+      </li>
+      <li>
+        <a class="text-sm text-gray-400 hover:text-yellow-600" th:href="@{/about}">About Us</a>
+      </li>
+      <li class="text-gray-300">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill"
+             viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+        </svg>
+      </li>
+      <li>
+        <a class="text-sm text-gray-400 hover:text-yellow-600" th:href="@{/services}">Services</a>
+      </li>
+      <li class="text-gray-300">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill"
+             viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+        </svg>
+      </li>
+      <li>
+        <a class="text-sm text-gray-400 hover:text-yellow-600" th:href="@{/pricing}">Pricing</a>
+      </li>
+      <li class="text-gray-300">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill"
+             viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+        </svg>
+      </li>
+      <li>
+        <a class="text-sm text-gray-400 hover:text-yellow-600" th:href="@{/contact}">Contact</a>
+      </li>
+    </ul>
+    <a class="hidden lg:inline-block py-2 px-6 bg-yellow-500 hover:bg-yellow-600 text-sm text-white font-bold rounded-xl transition duration-200"
+       th:href="@{/dashboard}">Sign in</a>
+  </nav>
+  <div class="navbar-menu relative hidden">
+    <div class="navbar-backdrop fixed inset-0 bg-gray-400 opacity-25 z-50"></div>
+    <nav
+            class="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-gray-600 border-r overflow-y-auto z-max"
+            aria-label="mobile navbar">
+      <div class="flex items-center mb-8">
+        <a class="mr-auto text-3xl font-bold leading-none" th:href="@{/}">
+          <img th:src="@{/images/logo50w.png}" alt="logo" class="h-12 inline-block" />
+          <span class="inline-block text-white text-lg ml-3 font-thin">
+            My<span class="font-bold text-yellow-500">PLODS</span>
+          </span>
+        </a>
+        <button class="navbar-close">
+          <svg class="h-6 w-6 text-gray-400 cursor-pointer hover:text-yellow-500" xmlns="http://www.w3.org/2000/svg"
+               fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div>
+        <ul>
+          <li class="mb-1">
+            <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-yellow-600 rounded"
+               th:href="@{/}">Home</a>
           </li>
-        </ul>
-        <ul class="navbar-nav d-none d-md-block">
-
-          <!-- Login button: show if NOT authenticated -->
-          <li sec:authorize="!isAuthenticated()" class="nav-item">
-            <a th:href="@{/oauth2/authorization/auth0}" id="navLoginBtn" class="btn btn-primary btn-margin">Login</a>
+          <li class="mb-1">
+            <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-yellow-600 rounded"
+               th:href="@{/about}">About Us</a>
           </li>
-          <!-- / Login button -->
-
-          <!-- Fullsize dropdown: show if authenticated -->
-          <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
-            <a
-                    class="nav-link dropdown-toggle"
-                    href="#"
-                    id="profileDropDown"
-                    data-toggle="dropdown"
-            >
-              <!-- Profile image should be set to the profile picture from the id token -->
-              <img th:src="${profile.get('picture')}"  alt="Profile picture" class="nav-user-profile rounded-circle" width="50"/>
-            </a>
-            <div class="dropdown-menu dropdown-menu-left">
-              <!-- Show the user's full name from the id token here -->
-              <div class="dropdown-header" th:text="${profile.get('name')}"></div>
-              <a href="/profile" class="dropdown-item dropdown-profile">
-                <i class="fas fa-user mr-3"></i> Profile
-              </a>
-              <a id="qsLogoutBtn" th:href="@{/logout}" class="dropdown-item">
-                <i class="fas fa-power-off mr-3"></i> Log out
-              </a>
-            </div>
+          <li class="mb-1">
+            <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-yellow-600 rounded"
+               th:href="@{/services}">Services</a>
           </li>
-          <!-- /Fullsize dropdown -->
-
-        </ul>
-
-        <!-- Responsive login button: show if NOT authenticated -->
-        <ul sec:authorize="!isAuthenticated()" class="navbar-nav d-md-none">
-          <a th:href="@{/oauth2/authorization/auth0}" id="qsLoginBtn" class="btn btn-primary btn-block">Login</a>
-        </ul>
-        <!-- /Responsive login button -->
-
-        <!-- Responsive profile dropdown: show if authenticated -->
-        <ul sec:authorize="isAuthenticated()" class="navbar-nav d-md-none justify-content-between" style="min-height: 120px;">
-          <li class="nav-item">
-                        <span class="user-info">
-                        <!-- Profile image should be set to the profile picture from the id token -->
-                            <img th:src="${profile.get('picture')}" alt="Profile picture" class="nav-user-profile d-inline-bloc rounded-circle mr-3" width="50"/>
-                          <!-- Show the user's full name from the id token here-->
-                            <h6 class="d-inline-block" th:text="${profile.get('name')}"></h6>
-                        </span>
+          <li class="mb-1">
+            <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-yellow-600 rounded"
+               th:href="@{/pricing}">Pricing</a>
           </li>
-          <li>
-            <i class="fas fa-user mr-3"></i>
-            <a th:href="@{/profile}"> Profile</a>
-          </li>
-
-          <li>
-            <i class="fas fa-power-off mr-3"></i>
-            <a th:href="@{/logout}"> Log out</a>
+          <li class="mb-1">
+            <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-yellow-600 rounded"
+               th:href="@{/contact}">Contact</a>
           </li>
         </ul>
       </div>
-    </div>
-  </nav>
+      <div class="mt-auto">
+        <div class="pt-6">
+          <a class="block px-4 py-3 mb-3 text-xs text-center font-semibold leading-none text-white bg-yellow-600 hover:bg-yellow-700 rounded-xl"
+             th:href="@{/dashboard}">Sign in</a>
+        </div>
+        <p class="my-4 text-xs text-center text-gray-400">
+          <span>Copyright © 2022</span>
+        </p>
+      </div>
+    </nav>
+  </div>
+
 </div>
 </html>
