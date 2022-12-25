@@ -14,9 +14,9 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model, @AuthenticationPrincipal OidcUser principal) {
+        model.addAttribute("title", "MyPLODS Airline");
         if (principal != null) {
             model.addAttribute("profile", principal.getClaims());
-            model.addAttribute("title", "MyPLODS Airline");
         }
         return "index";
     }

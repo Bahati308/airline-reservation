@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="head">
+<head th:fragment="head (title)" th:assert="${!#strings.isEmpty(title)}">
 
   <meta charset="utf-8" />
   <link href="/images/" rel="shortcut icon" />
@@ -11,9 +11,8 @@
   <meta name="keywords"
         content="airline reservation" />
   <meta name="author" content="MyPLODS" />
-  <title>@{title}</title>
+  <title th:text="${title}"></title>
   <link rel="stylesheet" href="/css/app.css" />
-  <meta charset="utf-8"/>
 
 </head>
 </html>
