@@ -1,10 +1,10 @@
-FROM iits/jdk19:jdk-19-alpine
+FROM bellsoft/liberica-openjdk-alpine:17
 
-WORKDIR /tmp
-ADD . /tmp
+WORKDIR /app
+ADD . /app
 
-RUN sudo apt install maven
-RUN mvn install
+RUN mvn -B dependency:resolve dependency:resolve-plugins
+RUN mvn -B package
 COPY target/*.jar air-reserveation.jar
 ENTRYPOINT ("java","-jar","/air-reserveation.jar")
 
