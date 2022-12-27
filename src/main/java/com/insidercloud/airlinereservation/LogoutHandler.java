@@ -10,7 +10,6 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
@@ -56,16 +55,16 @@ public class LogoutHandler extends SecurityContextLogoutHandler {
         // URL will look like https://YOUR-DOMAIN/v2/logout?clientId=YOUR-CLIENT-ID&returnTo=http://localhost:3000logout?
         String issuer = (String) getClientRegistration().getProviderDetails().getConfigurationMetadata().get("issuer");
         String clientId = getClientRegistration().getClientId();
-        String returnTo = ServletUriComponentsBuilder.fromCurrentContextPath().build().toString();
 
         String logoutUrl = UriComponentsBuilder
-                .fromHttpUrl(issuer + "v2/logout?federated&client_id={clientId}&returnTo={returnTo}")
+                .fromHttpUrl(issuer + "v2/logout?client_id={clientId}&returnTo=https://myplods.herokuapp.com")
                 .encode()
-                .buildAndExpand(clientId, returnTo)
+                .buildAndExpand(clientId)
                 .toUriString();
 
         log.info("Will attempt to redirect to logout URL: {}", logoutUrl);
         try {
+            httpServletRequest.getSession().invalidate();
             httpServletResponse.sendRedirect(logoutUrl);
         } catch (IOException ioe) {
             log.error("Error redirecting to logout URL", ioe);
