@@ -21,12 +21,14 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests( requests -> requests
-                .requestMatchers("/","packages","/images/**","/css/**","/js/**").permitAll()
+                .requestMatchers("/","/packages/**","/images/**","/css/**","/js/**").permitAll()
                 .anyRequest().authenticated()
                 )
                     .oauth2Login()
                     .and()
                     .logout(logout -> logout
+                            .deleteCookies("JSESSIONID")
+                            .invalidateHttpSession(true)
                             .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                             .addLogoutHandler(logoutHandler)
                             .logoutSuccessUrl("/")

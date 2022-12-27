@@ -55,11 +55,12 @@ public class LogoutHandler extends SecurityContextLogoutHandler {
         // URL will look like https://YOUR-DOMAIN/v2/logout?clientId=YOUR-CLIENT-ID&returnTo=http://localhost:3000logout?
         String issuer = (String) getClientRegistration().getProviderDetails().getConfigurationMetadata().get("issuer");
         String clientId = getClientRegistration().getClientId();
+        String returnTo = UriComponentsBuilder.fromHttpUrl("https://myplods.herokuapp.com").path("/").build().toUriString();
 
         String logoutUrl = UriComponentsBuilder
-                .fromHttpUrl(issuer + "v2/logout?client_id={clientId}&returnTo=https://myplods.herokuapp.com")
+                .fromHttpUrl(issuer + "v2/logout?client_id={clientId}&returnTo={returnTo}")
                 .encode()
-                .buildAndExpand(clientId)
+                .buildAndExpand(clientId, returnTo)
                 .toUriString();
 
         log.info("Will attempt to redirect to logout URL: {}", logoutUrl);
