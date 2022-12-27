@@ -35,6 +35,7 @@ public class Plane {
         this.total2ndPassengers = total2ndPassengers;
         this.maxCargoCapacity = maxCargoCapacity;
     }
+    public Plane(){}
 
     public String getId() {
         return id;

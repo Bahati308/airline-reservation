@@ -15,6 +15,7 @@ public class ProfileController {
 
     @GetMapping("/dashboard")
     public String profile(Model model, @AuthenticationPrincipal OidcUser oidcUser) {
+        model.addAttribute("title", "Dashboard");
         model.addAttribute("profile", oidcUser.getClaims());
         return "profile";
     }
